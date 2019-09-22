@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# Google Auth 
+token.pickle
+
+# API Keys
+*.key
