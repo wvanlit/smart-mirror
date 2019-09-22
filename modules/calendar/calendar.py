@@ -49,7 +49,7 @@ class CalendarWidget(Widget):
 	    self.calendarService = build('calendar', 'v3', credentials=creds)
 
 	def updateCalendar(self, dt):
-		n_events = 5
+		n_events = 3
 
 		if self.calendarService is None:
 			eventText = "[color=#ffffff]Not Connected![/color]"
