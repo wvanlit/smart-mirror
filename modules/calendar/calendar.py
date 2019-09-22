@@ -1,5 +1,6 @@
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
+from kivy.clock import Clock
 
 import datetime
 from dateutil import tz
@@ -51,7 +52,7 @@ class CalendarWidget(Widget):
 		n_events = 5
 
 		if self.calendarService is None:
-			eventText = "Not Connected!"
+			eventText = "[color=#ffffff]Not Connected![/color]"
 			return
 
 		# Call the Calendar API
@@ -61,15 +62,16 @@ class CalendarWidget(Widget):
 														orderBy='startTime').execute()
 		events = events_result.get('items', [])
 
-		self.eventText = f'Upcoming {n_events} Calendar Events:\n'
+		self.eventText = f'[color=#ffffff]Upcoming {n_events} Calendar Events:\n'
 		if not events:
-			self.eventText = 'No upcoming events found.'
+			self.eventText = '[color=#ffffff]No upcoming events found.[/color]'
 
 		for event in events:
 			start = event['start'].get('dateTime', event['start'].get('date'))
 			summary = event['summary']
 			self.eventText += f'{convertTimeToLocal(start)} - {summary}\n'
 
+		self.eventText += '[/color]'
 
 
 from_zone = tz.tzutc()
@@ -82,3 +84,13 @@ def convertTimeToLocal(inputText):
 
 	localTime = utc.astimezone(to_zone)
 	return localTime.strftime("%d %b")
+
+
+def BuildWidget():
+	# Build Calendar
+	widget = CalendarWidget()
+	widget.setUpCalendar()
+	widget.updateCalendar(0)
+	Clock.schedule_interval(widget.updateCalendar, 600)
+	return widget
+
