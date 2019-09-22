@@ -5,10 +5,12 @@ from kivy.clock import Clock
 
 from modules.clock import clock
 from modules.calendar import calendar
-
+from modules.weather import weather
 # Load kv files
 clockFile = Builder.load_file('modules/clock/clock.kv')
 calendarFile = Builder.load_file('modules/calendar/calendar.kv')
+weatherFile = Builder.load_file('modules/weather/weather.kv')
+
 
 class MirrorApp(App):
 	def build(self):
@@ -17,7 +19,7 @@ class MirrorApp(App):
 		# Build Clock
 		clockWidget = clock.ClockWidget()
 		Clock.schedule_interval(clockWidget.update_time, 0.5)
-		layout.add_widget(clockWidget)
+		#layout.add_widget(clockWidget)
 
 		# Build Calendar
 		calendarWidget = calendar.CalendarWidget()
@@ -25,6 +27,12 @@ class MirrorApp(App):
 		calendarWidget.updateCalendar(0)
 		Clock.schedule_interval(calendarWidget.updateCalendar, 600)
 		layout.add_widget(calendarWidget)
+
+		# Build Weather
+		weatherWidget = weather.WeatherWidget()
+		weatherWidget.updateWeather(0)
+		Clock.schedule_interval(weatherWidget.updateWeather, 600)
+		layout.add_widget(weatherWidget)
 
 		return layout
 

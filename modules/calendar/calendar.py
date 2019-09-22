@@ -67,11 +67,8 @@ class CalendarWidget(Widget):
 
 		for event in events:
 			start = event['start'].get('dateTime', event['start'].get('date'))
-			print(start)
 			summary = event['summary']
 			self.eventText += f'{convertTimeToLocal(start)} - {summary}\n'
-
-		print(self.eventText)
 
 
 
