@@ -2,6 +2,9 @@ from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
 
 import datetime
+from dateutil import tz
+
+# Google Calendar Stuff
 import pickle
 import os.path
 from googleapiclient.discovery import build
@@ -66,6 +69,19 @@ class CalendarWidget(Widget):
 			start = event['start'].get('dateTime', event['start'].get('date'))
 			print(start)
 			summary = event['summary']
-			self.eventText += f'{summary}\n'
+			self.eventText += f'{convertTimeToLocal(start)} - {summary}\n'
 
 		print(self.eventText)
+
+
+
+from_zone = tz.tzutc()
+to_zone = tz.tzlocal()
+
+def convertTimeToLocal(inputText):
+	split_input = inputText.split('T')[0]
+	utc = datetime.datetime.strptime(split_input, '%Y-%m-%d')
+	utc = utc.replace(tzinfo=from_zone)
+
+	localTime = utc.astimezone(to_zone)
+	return localTime.strftime("%d %b")
