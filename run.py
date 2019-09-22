@@ -1,24 +1,25 @@
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
+from kivy.clock import Clock
 
 from modules.clock import clock
 
 # Load kv files
 clockFile = Builder.load_file('modules/clock/clock.kv')
 
-
-class MirrorWidget(Widget):
-	layout = GridLayout(rows = 2, cols = 1)
-	layout.add_widget(clock.ClockWidget())
-	layout.add_widget(clock.ClockWidget())
-
-
 class MirrorApp(App):
 	def build(self):
-		mirror = MirrorWidget()
-		return mirror.layout
+		layout = GridLayout(rows = 1, cols = 1)
+
+		# Build Clock
+		clockWidget = clock.ClockWidget()
+		Clock.schedule_interval(clockWidget.update_time, 0.5)
+		layout.add_widget(clockWidget)
+
+
+
+		return layout
 
 
 if __name__ == '__main__':
