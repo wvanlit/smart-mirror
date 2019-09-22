@@ -17,17 +17,21 @@ weatherFile = Builder.load_file('modules/weather/weather.kv')
 
 class MirrorApp(App):
 	def build(self):
-		layout = GridLayout(rows=3, cols=3)
+		layout = GridLayout(rows=5, cols=3)
 
 		layout.add_widget(clock.BuildWidget())
 		layout.add_widget(Widget())
+		layout.add_widget(Widget())
+
 		layout.add_widget(calendar.BuildWidget())
+		layout.add_widget(Widget())
+		layout.add_widget(Widget())
+
+		layout.add_widget(Widget())
+		layout.add_widget(Widget())
+		layout.add_widget(Widget())
 
 		layout.add_widget(weather.BuildWidget())
-		layout.add_widget(Widget())
-		layout.add_widget(Widget())
-
-		layout.add_widget(Widget())
 		layout.add_widget(Widget())
 		layout.add_widget(Widget())
 
